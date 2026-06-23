@@ -8,6 +8,19 @@ document.addEventListener("DOMContentLoaded", function () {
     let commandHistory = [];
     let historyIndex = -1;
 
+    // Auto-printed on load so visitors — and search/AI crawlers that render
+    // JavaScript — see real, indexable content instead of an empty terminal.
+    const welcomeMessage = `
+    <div class="welcome">
+    <span class="prompt">λ</span> whoami<br>
+    <b>Kartik Jain</b> — Backend Developer &amp; Cybersecurity Researcher based in Mumbai, India.<br><br>
+    I build secure, scalable backend systems (Node.js, FastAPI, PostgreSQL) and developer tools,
+    and I research application security — with responsible disclosures to <b>Meta (WhatsApp)</b>,
+    <b>Microsoft</b>, and others.<br><br>
+    Type <b>help</b> to explore. Try: <b>projects</b>, <b>skills</b>, <b>awards</b>, <b>resume</b>.
+    </div>
+    `;
+
     const helpMessage = `
     <b>💻 System Commands:</b><br>
     <b>help or h</b>       - Show available commands<br>
@@ -24,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <b>🌐 Online Profiles:</b><br>
     <b>linkedin or ln</b>  - Open my LinkedIn<br>
     <b>github or gh</b>    - Open my GitHub<br>
+    <b>contact or c</b>    - Show how to reach me<br>
     <br>
     <b>📄 Documents:</b><br>
     <b>resume or r</b>     - Download my resume<br>
@@ -55,7 +69,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return `Opening <a href="https://linkedin.com/in/KartikJain1410" target="_blank" class="custom-link">LinkedIn/KartikJain1410</a>...`;
         },
 
-        whoami: `<a href="https://jkartik.in" class="custom-link">Kartik Jain</a> — Backend & Security Engineer passionate about secure system design, automation, and digital infrastructure.`,
+        whoami: `<a href="https://jkartik.in" class="custom-link">Kartik Jain</a> — Backend & Security Engineer based in Mumbai, India, passionate about secure system design, automation, and digital infrastructure.`,
+
+        contact: `
+        <b>Get in touch:</b><br>
+        • Email: <a href="mailto:contact@jkartik.in" class="custom-link">contact@jkartik.in</a><br>
+        • Security: <a href="mailto:security@jkartik.in" class="custom-link">security@jkartik.in</a><br>
+        • GitHub: <a href="https://github.com/KartikJain14" target="_blank" rel="noopener" class="custom-link">github.com/KartikJain14</a><br>
+        • LinkedIn: <a href="https://linkedin.com/in/KartikJain1410" target="_blank" rel="noopener" class="custom-link">linkedin.com/in/KartikJain1410</a><br>
+        `,
 
         projects: `
         <b>Featured Projects:</b><br>
@@ -111,6 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
         gh: "github",
         ln: "linkedin",
         r: "resume",
+        c: "contact",
+        email: "contact",
         cls: "clear",
         h: "help",
         fetch: "neofetch"
@@ -138,6 +162,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function resetTerminal() {
         output.innerHTML = `<div class="help-message">Type 'help' to see available commands.</div>`;
+        input.value = "";
+        hint.textContent = "";
+    }
+
+    function printWelcome() {
+        output.innerHTML = welcomeMessage;
         input.value = "";
         hint.textContent = "";
     }
@@ -229,6 +259,6 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("input", updateAutocompleteHint);
     terminal.addEventListener("click", () => input.focus());
 
-    resetTerminal();
+    printWelcome();
     createCommandBar();
 });

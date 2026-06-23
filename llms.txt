@@ -1,0 +1,51 @@
+# Kartik Jain
+
+> Kartik Jain (jkartik) is a backend developer and cybersecurity researcher based in Mumbai, India. He builds secure, scalable backend systems and developer tools, and has responsibly disclosed security vulnerabilities to companies including Meta (WhatsApp) and Microsoft.
+
+## About
+
+Kartik Jain is a backend & security engineer focused on secure system design, automation, and digital infrastructure. He builds production backends with Node.js, FastAPI, and PostgreSQL, and works on the offensive-security side through vulnerability research and responsible disclosure. He is the Technical SuperCore at ACM MPSTME and Technical Head at the Taqneeq and Mumbai MUN fests, where he leads 150+ students in cybersecurity awareness and technical development.
+
+- Name: Kartik Jain
+- Handle: jkartik
+- Roles: Backend Developer, Cybersecurity Researcher
+- Location: Mumbai, India
+- Website: https://jkartik.in
+
+## Skills
+
+- Languages: Python, TypeScript, Dart, C++, Java
+- Backend: Node.js, FastAPI, Flask, Express.js
+- Databases: PostgreSQL, Drizzle ORM, MongoDB, Neo4j
+- Security: Burp Suite, Nmap, Semgrep, Nuclei, Sliver C2
+- DevOps: Docker, Nginx, Redis, CI/CD
+- Cloud: AWS, Azure, GCP, Oracle Cloud
+- Tools: Git, Postman, Linux (Arch, Ubuntu)
+
+## Projects
+
+- **mpstme.pics** — Production-grade photo-sharing platform backend built with Node.js, Express, PostgreSQL, Drizzle ORM, and AWS S3.
+- **Event Registration Platform** — Full-stack event system with Cashfree payments, email confirmations, QR-based ticket scanning, and admin analytics.
+- **Event App Backends** — FastAPI + PostgreSQL systems powering the Taqneeq Fest and Mumbai MUN Flutter apps with referral systems and real-time sync.
+- **Certificate Portal** — Automated event certificate generator and verifier supporting CSV batch upload and template positioning.
+- **F1 Semicolon** — Real-time multiplayer quiz racing game using Node.js, WebSockets, and Redis.
+
+## Security Research & Responsible Disclosures
+
+- Reported a privilege-escalation vulnerability in Meta's WhatsApp.
+- Disclosed vulnerabilities in Microsoft Intune and Exchange Admin.
+- Responsible disclosure of a Stored XSS in the Mumbai Police website (via CERT-In).
+- Found critical exposures in The Souled Store and Belgian Waffle Co. (potential infrastructure/CRM compromise).
+
+## Links
+
+- Portfolio: https://jkartik.in
+- GitHub: https://github.com/KartikJain14
+- LinkedIn: https://linkedin.com/in/kartikjain1410
+- Twitter/X: https://twitter.com/kartikjain1410
+- Résumé (PDF): https://jkartik.in/Kartik_Resume.pdf
+
+## Contact
+
+- Email: contact@jkartik.in
+- Security reports: security@jkartik.in
