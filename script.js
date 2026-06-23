@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     I build secure, scalable backend systems (Node.js, FastAPI, PostgreSQL) and developer tools,
     and I research application security — with responsible disclosures to <b>Meta (WhatsApp)</b>,
     <b>Microsoft</b>, and others.<br><br>
-    Type <b>help</b> to explore. Try: <b>projects</b>, <b>skills</b>, <b>awards</b>, <b>resume</b>.
+    <b>Available for freelance projects</b> — type <b>hire</b> to work with me.<br><br>
+    Type <b>help</b> to explore. Try: <b>projects</b>, <b>skills</b>, <b>awards</b>, <b>hire</b>.
     </div>
     `;
 
@@ -33,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     <b>projects</b>   - List my featured projects<br>
     <b>awards</b>     - Display my security discoveries<br>
     <b>others</b>     - Show my leadership and soft skills<br>
+    <b>hire</b>       - Freelance services & availability<br>
+    <b>faq</b>        - Frequently asked questions<br>
     <br>
     <b>🌐 Online Profiles:</b><br>
     <b>linkedin or ln</b>  - Open my LinkedIn<br>
@@ -55,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <span class="blue">   /  /\\  \\   </span>  Time: ${currentTime}
         <span class="blue">  /  (--)  \\  </span>  Email: <a href="mailto:contact@jkartik.in" class="custom-link">contact@jkartik.in</a>
         <span class="blue"> /  /    \\  \\ </span>  GitHub: <a href="https://github.com/KartikJain14" target="_blank" class="custom-link">github.com/KartikJain14</a>
-        <span class="blue">/___\\    /___\\</span>  LinkedIn: <a href="https://linkedin.com/in/KartikJain1410" target="_blank" class="custom-link">linkedin.com/in/KartikJain1410</a>
+        <span class="blue">/___\\    /___\\</span>  LinkedIn: <a href="https://linkedin.com/in/kartikjain1410" target="_blank" class="custom-link">linkedin.com/in/kartikjain1410</a>
         </pre>`;
         },
 
@@ -65,8 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         linkedin: () => {
-            window.open("https://linkedin.com/in/KartikJain1410", "_blank");
-            return `Opening <a href="https://linkedin.com/in/KartikJain1410" target="_blank" class="custom-link">LinkedIn/KartikJain1410</a>...`;
+            window.open("https://linkedin.com/in/kartikjain1410", "_blank");
+            return `Opening <a href="https://linkedin.com/in/kartikjain1410" target="_blank" class="custom-link">LinkedIn/kartikjain1410</a>...`;
         },
 
         whoami: `<a href="https://jkartik.in" class="custom-link">Kartik Jain</a> — Backend & Security Engineer based in Mumbai, India, passionate about secure system design, automation, and digital infrastructure.`,
@@ -76,7 +79,29 @@ document.addEventListener("DOMContentLoaded", function () {
         • Email: <a href="mailto:contact@jkartik.in" class="custom-link">contact@jkartik.in</a><br>
         • Security: <a href="mailto:security@jkartik.in" class="custom-link">security@jkartik.in</a><br>
         • GitHub: <a href="https://github.com/KartikJain14" target="_blank" rel="noopener" class="custom-link">github.com/KartikJain14</a><br>
-        • LinkedIn: <a href="https://linkedin.com/in/KartikJain1410" target="_blank" rel="noopener" class="custom-link">linkedin.com/in/KartikJain1410</a><br>
+        • LinkedIn: <a href="https://linkedin.com/in/kartikjain1410" target="_blank" rel="noopener" class="custom-link">linkedin.com/in/kartikjain1410</a><br>
+        `,
+
+        hire: `
+        <b>💼 Available for Freelance Projects</b><br><br>
+        I take on <b>cybersecurity</b> and <b>backend</b> engineering work:<br>
+        • Security assessments &amp; penetration testing<br>
+        • Vulnerability research &amp; responsible disclosure<br>
+        • Secure backend &amp; API development (Node.js, FastAPI, PostgreSQL)<br>
+        • DevOps, automation &amp; cloud (Docker, AWS)<br><br>
+        Let's talk → <a href="mailto:contact@jkartik.in?subject=Freelance%20Project%20Inquiry" class="custom-link">contact@jkartik.in</a>
+        `,
+
+        faq: `
+        <b>❓ Frequently Asked Questions</b><br><br>
+        <b>Who is Kartik Jain?</b><br>
+        Backend developer &amp; cybersecurity researcher from Mumbai, India, with disclosures to Meta (WhatsApp) &amp; Microsoft.<br><br>
+        <b>Available for freelance work?</b><br>
+        Yes — security assessments, pentesting, and secure backend/API development. Type <b>hire</b>.<br><br>
+        <b>What does he specialize in?</b><br>
+        Secure backends (Node.js, FastAPI, PostgreSQL) and application security.<br><br>
+        <b>How to contact / hire?</b><br>
+        Email <a href="mailto:contact@jkartik.in" class="custom-link">contact@jkartik.in</a>. Also on GitHub &amp; LinkedIn.
         `,
 
         projects: `

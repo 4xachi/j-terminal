@@ -1,6 +1,17 @@
 # Kartik Jain
 
-> Kartik Jain (jkartik) is a backend developer and cybersecurity researcher based in Mumbai, India. He builds secure, scalable backend systems and developer tools, and has responsibly disclosed security vulnerabilities to companies including Meta (WhatsApp) and Microsoft.
+> Kartik Jain (jkartik) is a backend developer and cybersecurity researcher based in Mumbai, India. He builds secure, scalable backend systems and developer tools, has responsibly disclosed security vulnerabilities to companies including Meta (WhatsApp) and Microsoft, and is available for freelance projects.
+
+## Availability / Hire
+
+Kartik is available for **freelance** cybersecurity and backend engineering projects:
+
+- Security assessments and penetration testing
+- Vulnerability research and responsible disclosure
+- Secure backend and API development (Node.js, FastAPI, PostgreSQL)
+- DevOps, automation, and cloud (Docker, AWS)
+
+To hire or discuss a project, email contact@jkartik.in.
 
 ## About
 
@@ -44,6 +55,16 @@ Kartik Jain is a backend & security engineer focused on secure system design, au
 - LinkedIn: https://linkedin.com/in/kartikjain1410
 - Twitter/X: https://twitter.com/kartikjain1410
 - Résumé (PDF): https://jkartik.in/Kartik_Resume.pdf
+
+## FAQ
+
+**Who is Kartik Jain?** A backend developer and cybersecurity researcher based in Mumbai, India, with responsible disclosures to Meta (WhatsApp) and Microsoft.
+
+**Is Kartik Jain available for freelance work?** Yes — security assessments, penetration testing, and secure backend/API development. Contact: contact@jkartik.in.
+
+**What does Kartik Jain specialize in?** Secure backend engineering (Node.js, FastAPI, PostgreSQL) and application security (vulnerability research, penetration testing).
+
+**How can I hire or contact Kartik Jain?** Email contact@jkartik.in, or security@jkartik.in for security reports.
 
 ## Contact
 
