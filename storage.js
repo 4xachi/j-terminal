@@ -11,30 +11,71 @@ class UploadcareStorageProvider {
     async upload(fileId, buffer) {
         try {
             const pubKey = process.env.UPLOADCARE_PUBLIC_KEY || 'c6ee39f607e7c27c7dac';
-            const formData = new FormData();
-            formData.append('UPLOADCARE_PUB_KEY', pubKey);
-            formData.append('UPLOADCARE_STORE', '0'); // Auto-delete files after 24 hours (1 day)
             
-            // Convert Buffer to Blob for standard FormData upload
-            const blob = new Blob([buffer], { type: 'application/octet-stream' });
-            formData.append('file', blob, fileId);
-
-            const res = await fetch('https://upload.uploadcare.com/base/', {
-                method: 'POST',
-                body: formData
+            // Build multipart/form-data payload manually to support all Node.js versions
+            const boundary = `----WebKitFormBoundary${Math.random().toString(36).substring(2)}`;
+            const parts = [];
+            
+            // Add UPLOADCARE_PUB_KEY part
+            parts.push(Buffer.from(
+                `--${boundary}\r\n` +
+                `Content-Disposition: form-data; name="UPLOADCARE_PUB_KEY"\r\n\r\n` +
+                `${pubKey}\r\n`
+            ));
+            
+            // Add UPLOADCARE_STORE part
+            parts.push(Buffer.from(
+                `--${boundary}\r\n` +
+                `Content-Disposition: form-data; name="UPLOADCARE_STORE"\r\n\r\n` +
+                `0\r\n`
+            ));
+            
+            // Add file part
+            parts.push(Buffer.from(
+                `--${boundary}\r\n` +
+                `Content-Disposition: form-data; name="file"; filename="${fileId}"\r\n` +
+                `Content-Type: application/octet-stream\r\n\r\n`
+            ));
+            
+            parts.push(buffer);
+            parts.push(Buffer.from(`\r\n--${boundary}--\r\n`));
+            
+            const payload = Buffer.concat(parts);
+            
+            return new Promise((resolve, reject) => {
+                const https = require('https');
+                const req = https.request('https://upload.uploadcare.com/base/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                        'Content-Length': payload.length
+                    }
+                }, (res) => {
+                    let body = '';
+                    res.on('data', chunk => body += chunk);
+                    res.on('end', () => {
+                        if (res.statusCode >= 200 && res.statusCode < 300) {
+                            try {
+                                const data = JSON.parse(body);
+                                if (data.file) {
+                                    resolve(data.file);
+                                } else {
+                                    reject(new Error("Uploadcare response did not include file UUID."));
+                                }
+                            } catch (e) {
+                                reject(e);
+                            }
+                        } else {
+                            reject(new Error(`Uploadcare upload failed with status ${res.statusCode}: ${body}`));
+                        }
+                    });
+                });
+                
+                req.on('error', reject);
+                req.write(payload);
+                req.end();
             });
-
-            if (!res.ok) {
-                const text = await res.text();
-                throw new Error(`Uploadcare upload failed: ${res.statusText} - ${text}`);
-            }
-
-            const data = await res.json();
-            if (!data.file) {
-                throw new Error("Uploadcare response did not include file UUID.");
-            }
-
-            return data.file; // The storage reference is the Uploadcare file UUID
+            
         } catch (err) {
             console.error("Uploadcare upload provider error:", err);
             throw err;
@@ -47,18 +88,20 @@ class UploadcareStorageProvider {
      * @returns {Promise<Buffer>} The decrypted file buffer.
      */
     async download(storageReference) {
-        try {
-            const res = await fetch(`https://ucarecdn.com/${storageReference}/`);
-            if (!res.ok) {
-                throw new Error(`Uploadcare download failed: ${res.statusText}`);
-            }
-
-            const arrayBuffer = await res.arrayBuffer();
-            return Buffer.from(arrayBuffer);
-        } catch (err) {
-            console.error("Uploadcare download provider error:", err);
-            throw err;
-        }
+        return new Promise((resolve, reject) => {
+            const https = require('https');
+            https.get(`https://ucarecdn.com/${storageReference}/`, (res) => {
+                if (res.statusCode !== 200) {
+                    reject(new Error(`Uploadcare download failed with status ${res.statusCode}`));
+                    return;
+                }
+                const chunks = [];
+                res.on('data', chunk => chunks.push(chunk));
+                res.on('end', () => {
+                    resolve(Buffer.concat(chunks));
+                });
+            }).on('error', reject);
+        });
     }
 
     /**
