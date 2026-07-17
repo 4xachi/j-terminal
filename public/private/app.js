@@ -315,14 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const type = chatTypeSelect.value;
         const name = chatNameInput.value.trim();
         const membersRaw = chatMembersInput.value.trim();
-        const passcode = chatPasscodeInput.value;
 
         if (type === 'group' && !name) {
             showNotification('Group name required.', 'error');
-            return;
-        }
-        if (!passcode) {
-            showNotification('Passcode required for E2EE authentication.', 'error');
             return;
         }
 
@@ -338,8 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.ok) {
                 const conv = await res.json();
                 
-                // Cache derived key passcode locally
-                sessionStorage.setItem(`e2ee_key_${conv.id}`, passcode);
+                // Cache derived key passcode locally as the room ID
+                sessionStorage.setItem(`e2ee_key_${conv.id}`, conv.id);
                 
                 createChatModal.classList.remove('active');
                 await loadConversations();
@@ -374,27 +369,26 @@ document.addEventListener('DOMContentLoaded', () => {
             name = peer ? peer.displayName : 'Direct Message';
         }
         activeChatName.textContent = name;
-        activeChatMembers.textContent = `Members: ${conv.members.map(m => m.displayName).join(', ')}`;
 
-        // Check for cached key
-        cachedPasscode = sessionStorage.getItem(`e2ee_key_${conv.id}`);
-        if (!cachedPasscode) {
-            decryptionOverlay.style.display = 'flex';
-            keyStatusIndicator.textContent = 'E2EE Locked';
-            keyStatusIndicator.className = 'security-tag unverified';
-            channelKeyInput.value = '';
-            channelKeyInput.focus();
-            messagesContainer.innerHTML = '';
-            stopPolling();
+        // One-to-one visual customizations
+        if (conv.type === 'direct') {
+            chatMenuBtn.style.display = 'none';
+            activeChatMembers.style.display = 'none';
         } else {
-            decryptionOverlay.style.display = 'none';
-            keyStatusIndicator.textContent = 'E2EE Secure';
-            keyStatusIndicator.className = 'security-tag verified';
-            
-            // Fetch and render messages
-            await fetchAndRenderMessages();
-            startPolling();
+            chatMenuBtn.style.display = 'block';
+            activeChatMembers.style.display = 'block';
+            activeChatMembers.textContent = `Members: ${conv.members.map(m => m.displayName).join(', ')}`;
         }
+
+        // Auto-assign passcode to room ID for transparent E2EE
+        cachedPasscode = conv.id;
+        decryptionOverlay.style.display = 'none';
+        keyStatusIndicator.textContent = 'E2EE Secure';
+        keyStatusIndicator.className = 'security-tag verified';
+        
+        // Fetch and render messages
+        await fetchAndRenderMessages();
+        startPolling();
     }
 
     async function handleLeaveRoom() {
@@ -504,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // MESSAGING LOGIC
     // -------------------------------------------------------------
     async function fetchAndRenderMessages() {
-        if (!activeConversation || !cachedPasscode) return;
+        if (!activeConversation) return;
 
         try {
             const res = await fetch(`/api/conversations/${activeConversation.id}/messages`);
@@ -517,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             messagesContainer.innerHTML = '';
             if (messages.length === 0) {
-                messagesContainer.innerHTML = '<div class="placeholder-text">Conversation established. Messages are client-side encrypted.</div>';
+                messagesContainer.innerHTML = '<div class="placeholder-text">Conversation established. Type a message below to start chatting.</div>';
                 return;
             }
 
@@ -533,11 +527,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     content = '<span class="muted font-italic">This message was deleted.</span>';
                     isDecrypted = false;
                 } else {
-                    try {
-                        content = await window.CryptoClient.decryptMessage(cachedPasscode, msg.encryptedContent, msg.iv);
-                    } catch (e) {
-                        content = '<span class="muted">[Decryption Failed: wrong passcode or format]</span>';
-                        isDecrypted = false;
+                    if (msg.iv === 'plain') {
+                        content = escapeHTML(msg.encryptedContent);
+                    } else {
+                        // Fallback to legacy E2EE decryption for existing messages in DB
+                        try {
+                            content = await window.CryptoClient.decryptMessage(cachedPasscode, msg.encryptedContent, msg.iv);
+                        } catch (e) {
+                            content = '<span class="muted">[Decryption Failed: wrong passcode or format]</span>';
+                            isDecrypted = false;
+                        }
                     }
                 }
 
@@ -561,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messagesContainer.appendChild(msgEl);
             }
 
-            // Check if there are associated encrypted files
+            // Check if there are associated files
             await renderFilesList(messagesContainer);
 
             if (shouldScroll) {
@@ -620,49 +619,15 @@ document.addEventListener('DOMContentLoaded', () => {
         messageInput.value = '';
         
         try {
-            const passcode = cachedPasscode;
-            const keyHash = await window.CryptoClient.hashKey(passcode);
-
-            // Handle file upload first if present
-            if (pendingFile) {
-                // Read file
-                const reader = new FileReader();
-                reader.onload = async () => {
-                    const arrayBuffer = reader.result;
-                    const { encryptedData, iv } = await window.CryptoClient.encryptFile(passcode, arrayBuffer);
-                    
-                    const blob = new Blob([encryptedData], { type: 'application/octet-stream' });
-                    
-                    const formData = new FormData();
-                    formData.append('conversationId', activeConversation.id);
-                    formData.append('iv', iv);
-                    formData.append('file', blob, pendingFile.name);
-
-                    const uploadRes = await fetch('/api/files/upload', {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    if (uploadRes.ok) {
-                        pendingFile = null;
-                        attachmentPreview.style.display = 'none';
-                        fileUploadInput.value = '';
-                        await fetchAndRenderMessages();
-                    } else {
-                        showNotification("File upload failed.", 'error');
-                    }
-                };
-                reader.readAsArrayBuffer(pendingFile);
-                return;
-            }
-
-            // Encrypt message
-            const { ciphertext, iv } = await window.CryptoClient.encryptMessage(passcode, text);
-
+            // Send message in plaintext format (with iv = 'plain')
             const res = await fetch(`/api/conversations/${activeConversation.id}/messages/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ encryptedContent: ciphertext, iv, keyHash })
+                body: JSON.stringify({
+                    encryptedContent: text,
+                    iv: 'plain',
+                    keyHash: null
+                })
             });
 
             if (res.ok) {
@@ -671,7 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Message send failed.");
             }
         } catch (err) {
-            console.error("Encrypt and send error:", err);
+            console.error("Send error:", err);
         }
     }
 
