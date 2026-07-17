@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Session | johnstr.onrender.com</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container" class="show-sidebar">
+        <!-- Header -->
+        <header id="app-header">
+            <div class="header-left">
+                <span class="prompt">λ</span>
+                <span class="system-status"><span class="online-tag">ACTIVE</span></span>
+            </div>
+            <div class="header-right">
+                <span class="user-display" id="currentUserDisplay">Loading user...</span>
+                <button id="logoutBtn" class="terminal-btn header-btn">Exit Session [esc]</button>
+            </div>
+        </header>
+
+        <!-- Main Work Area -->
+        <main id="app-main">
+            <!-- Sidebar -->
+            <aside id="app-sidebar">
+                <div class="sidebar-tabs">
+                    <button class="tab-btn active" id="tabChatBtn">Chats</button>
+                    <button class="tab-btn" id="tabSettingsBtn">Settings</button>
+                    <button class="tab-btn" id="tabAdminBtn" style="display: none;">Admin</button>
+                </div>
+
+                <!-- Chat Sidebar View -->
+                <div class="tab-content active" id="sidebarChatView">
+                    <div class="sidebar-actions">
+                        <button id="createChatBtn" class="terminal-btn full-width">+ New Conversation</button>
+                    </div>
+                    <div class="list-container" id="conversationsList">
+                        <!-- Conversations list injected here -->
+                        <div class="placeholder-text">No active channels.</div>
+                    </div>
+                </div>
+
+                <!-- Admin Sidebar View -->
+                <div class="tab-content" id="sidebarAdminView">
+                    <div class="admin-menu">
+                        <button class="menu-btn active" data-view="users">User Accounts</button>
+                        <button class="menu-btn" data-view="invitations">One-Time Tokens</button>
+                        <button class="menu-btn" data-view="sessions">Active Sessions</button>
+                        <button class="menu-btn" data-view="storage">Storage &amp; Logs</button>
+                    </div>
+                </div>
+
+                <!-- Settings Sidebar View -->
+                <div class="tab-content" id="sidebarSettingsView">
+                    <div class="admin-menu">
+                        <p class="placeholder-text" style="opacity: 0.8; padding: 15px;">Configure your node credentials.</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Panel Content -->
+            <section id="app-content">
+                <!-- Welcome View -->
+                <div class="content-view active" id="welcomeView">
+                    <div class="terminal-splash">
+                        <div class="logo-container">
+                            <div class="glow-logo">
+                                <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-width="1.5" stroke-linejoin="round"/>
+                                    <path d="M2 17L12 22L22 17" stroke-width="1.5" stroke-linejoin="round"/>
+                                    <path d="M2 12L12 17L22 12" stroke-width="1.5" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2>Secure Private Communication Network</h2>
+                        <p class="muted">E2EE sqlite database storage is active.</p>
+                        <p>Select an existing conversation channel from the sidebar, or establish a new node.</p>
+                    </div>
+                </div>
+
+                <!-- Chat View -->
+                <div class="content-view" id="chatView">
+                    <!-- Chat Header -->
+                    <div id="chatHeader" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <button class="mobile-back-btn terminal-btn small-btn">&lt; Back</button>
+                            <div class="chat-info">
+                                <h3 id="activeChatName">Secure Channel</h3>
+                                <span id="activeChatMembers" class="muted">Members: --</span>
+                            </div>
+                        </div>
+                        <div class="chat-security">
+                            <span id="keyStatusIndicator" class="security-tag unverified">E2EE Locked</span>
+                            <button id="setChannelKeyBtn" class="terminal-btn small-btn">Set Passcode</button>
+                            <div class="dropdown-container">
+                                <button id="chatMenuBtn" class="terminal-btn small-btn">⋮ Room</button>
+                                <div id="chatMenuDropdown" class="dropdown-menu">
+                                    <button id="leaveRoomBtn" class="dropdown-item-btn">Leave Group</button>
+                                    <button id="deleteRoomBtn" class="dropdown-item-btn danger-item">Delete Room</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decryption Overlay -->
+                    <div id="decryptionOverlay" class="overlay">
+                        <div class="overlay-card">
+                            <h3>Encrypted Channel Access</h3>
+                            <p class="muted">Enter the shared conversation passcode to derive the AES-GCM decryption key. The passcode remains strictly client-side.</p>
+                            <input type="password" id="channelKeyInput" placeholder="Enter conversation passcode" class="terminal-input">
+                            <div class="overlay-buttons">
+                                <button id="submitChannelKeyBtn" class="terminal-btn">Decrypt Node</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Scroll Container -->
+                    <div id="messagesContainer">
+                        <!-- Messages injected here -->
+                    </div>
+
+                    <!-- Input Form Bar -->
+                    <div id="chatInputBar">
+                        <!-- Attachment Preview -->
+                        <div id="attachmentPreview" style="display: none;">
+                            <span class="file-icon">📄</span>
+                            <span id="attachmentName">file.txt</span>
+                            <button id="removeAttachmentBtn" class="small-btn text-btn">Remove</button>
+                        </div>
+
+                        <div class="input-row">
+                            <label for="fileUploadInput" class="terminal-btn file-btn" title="Upload encrypted file">+</label>
+                            <input type="file" id="fileUploadInput" style="display: none;">
+                            
+                            <textarea id="messageInput" placeholder="Write secure message... (Use Shift+Enter for newline)" rows="1" class="terminal-input"></textarea>
+                            
+                            <button id="sendMessageBtn" class="terminal-btn send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Control Views -->
+                <div class="content-view" id="adminView">
+                    <!-- Dynamic Admin Panels Inject Here -->
+                    <div id="adminPanelTitle" style="display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(0, 255, 153, 0.3); padding-bottom: 10px; margin-bottom: 20px;">
+                        <button class="mobile-back-btn terminal-btn small-btn">&lt; Back</button>
+                        <h3>Admin Operations Console</h3>
+                    </div>
+                    <div id="adminPanelContent"></div>
+                </div>
+
+                <!-- Settings View -->
+                <div class="content-view" id="settingsView">
+                    <div id="settingsHeader" style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-bottom: 1px solid rgba(0, 255, 153, 0.2); background: rgba(10, 10, 10, 0.6);">
+                        <button class="mobile-back-btn terminal-btn small-btn">&lt; Back</button>
+                        <h3>User Settings</h3>
+                    </div>
+                    <div style="padding: 30px; max-width: 550px; overflow-y: auto;">
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <input type="text" id="settingsUsernameInput" class="terminal-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Display Name:</label>
+                            <input type="text" id="settingsDisplayNameInput" class="terminal-input">
+                        </div>
+                        <div class="form-group">
+                            <label>New Password (leave blank to keep current):</label>
+                            <input type="password" id="settingsPasswordInput" class="terminal-input" placeholder="••••••••">
+                        </div>
+                        <div class="form-group" id="settingsConfirmPasswordGroup" style="display: none;">
+                            <label>Confirm New Password:</label>
+                            <input type="password" id="settingsConfirmPasswordInput" class="terminal-input" placeholder="••••••••">
+                        </div>
+                        <div style="margin-top: 25px;">
+                            <button id="saveSettingsBtn" class="terminal-btn">Save Profile Settings</button>
+                        </div>
+                        <div id="settingsMessage" style="margin-top: 15px; font-size: 13px;"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Create Conversation Modal -->
+    <div id="createChatModal" class="modal">
+        <div class="modal-card">
+            <h3>Establish New Connection</h3>
+            <div class="form-group">
+                <label>Type:</label>
+                <select id="chatTypeSelect" class="terminal-input">
+                    <option value="direct">Direct Message (One-to-One)</option>
+                    <option value="group">Group Channel</option>
+                </select>
+            </div>
+            <div class="form-group" id="groupNameField" style="display: none;">
+                <label>Group Channel Name:</label>
+                <input type="text" id="chatNameInput" placeholder="e.g. core-development" class="terminal-input">
+            </div>
+            <div class="form-group">
+                <label>Add Member Usernames (comma separated):</label>
+                <input type="text" id="chatMembersInput" placeholder="e.g. alice, bob" class="terminal-input">
+            </div>
+            <div class="form-group">
+                <label>E2EE Shared Passcode:</label>
+                <input type="password" id="chatPasscodeInput" placeholder="Key for message encryption/decryption" class="terminal-input">
+            </div>
+            <div class="modal-buttons">
+                <button id="cancelCreateChatBtn" class="terminal-btn cancel-btn">Cancel</button>
+                <button id="submitCreateChatBtn" class="terminal-btn">Establish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Notification Toast -->
+    <div id="terminal-toast" class="toast">
+        <span id="toast-icon">λ</span>
+        <span id="toast-message">Secure channel established.</span>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="crypto-client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

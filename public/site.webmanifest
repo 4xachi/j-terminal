@@ -1,7 +1,7 @@
 {
-  "name": "Kartik Jain — Backend Developer & Cybersecurity Researcher",
-  "short_name": "Kartik Jain",
-  "description": "Portfolio of Kartik Jain — backend developer and cybersecurity researcher based in Mumbai, India. Available for freelance projects.",
+  "name": "John Mark Talento Estrada — Backend Developer",
+  "short_name": "John Mark Estrada",
+  "description": "Portfolio of John Mark Talento Estrada — backend developer based in Tagaytay City, Philippines. Available for freelance projects.",
   "lang": "en",
   "start_url": "/",
   "scope": "/",
@@ -15,8 +15,8 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/kartik.png",
-      "sizes": "488x488",
+      "src": "/avatar.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }

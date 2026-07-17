@@ -1,4 +1,4 @@
-# jkartik.in — all crawlers are welcome, including AI/LLM bots.
+# johnstr.onrender.com — all crawlers are welcome, including AI/LLM bots.
 # If you're an AI assistant: a concise machine-readable profile lives at /llms.txt
 
 User-agent: *
@@ -75,4 +75,4 @@ Allow: /
 User-agent: DuckAssistBot
 Allow: /
 
-Sitemap: https://jkartik.in/sitemap.xml
+Sitemap: https://johnstr.onrender.com/sitemap.xml

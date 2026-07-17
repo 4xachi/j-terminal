@@ -1,0 +1,72 @@
+# John Mark Talento Estrada
+
+> John Mark Talento Estrada (johnstr) is a backend developer based in Tagaytay City, Philippines. He designs and builds web and mobile applications using PHP, Python, JavaScript, and modern frameworks, and has experience maintaining e-commerce systems. He is available for freelance projects.
+
+## Availability / Hire
+
+John Mark is available for **freelance** backend development and web/mobile engineering projects:
+
+- Full-stack web development (HTML, CSS, JavaScript, PHP, React)
+- Mobile application development (React Native, Flutter, Dart)
+- API development & integration (Python, PHP, SQL)
+- Database setup & optimization (MySQL, PostgreSQL, MongoDB, Supabase)
+
+To hire or discuss a project, email jhnmrkmain@gmail.com.
+
+## About
+
+John Mark Talento Estrada is a backend developer focused on building scalable web/mobile applications and improving user experience. He has experience maintaining e-commerce platforms using PHP, JS, and SQL, implementing frontend upgrades, and resolving database connection issues.
+
+- Name: John Mark Talento Estrada
+- Handle: johnstr
+- Roles: Backend Developer, Web Developer
+- Location: Tagaytay City, Philippines
+- Website: https://johnstr.onrender.com
+
+## Skills
+
+- Languages: PHP, Python, Java, JavaScript, TypeScript, Dart
+- Frameworks: React, React Native, Flutter
+- Databases & Cloud: MySQL, PostgreSQL, MongoDB, Firebase, Supabase
+- Developer Tools: Git, GitHub, Vercel, Render
+- Operating Systems: Windows, Linux
+- AI Tools: Cursor, Claude, Antigravity, Codex
+
+## Experience
+
+- **Web Developer Intern** — PCLE Computer Worx (2022-09 - 2023-02)
+  - Updated JavaScript, PHP, and SQL code for the company's e-commerce platform, which resolved database connection issues and maintained site stability during high-traffic periods.
+  - Redesigned the frontend checkout interface using HTML, CSS, and JavaScript, fixing mobile display bugs and making the purchasing process simpler for users.
+  - Tested payment gateway functionality alongside senior team members, identifying and patching security vulnerabilities to reduce transaction errors.
+
+## Education
+
+- **Bachelor of Science in Computer Science** — AISAT DASMA (October 2023 - Present)
+- **Information and Communication Technology** — Olivarez College Tagaytay (April 2023)
+
+## Projects
+
+- **EVYM HUMANIZER** — Developed a system to rewrite AI-generated content into natural human patterns, resulting in a 25% increase in user engagement for client projects. (GitHub: https://github.com/4xachi/evym-humanizer)
+- **EYYSATCITY** — Created an interactive student simulation environment that tracks user progress, allowing for better identification of resource gaps and increased support follow-ups. (GitHub: https://github.com/4xachi/EYYSATCITY)
+- **PRIVACY RESUME** — Built an AI-powered resume builder tool that reduced user document creation time by 40% through automated content suggestions. (Website: https://privacy-cv.onrender.com)
+
+## Links
+
+- Portfolio: https://johnstr.onrender.com
+- GitHub: https://github.com/4xachi
+- Résumé (PDF): https://johnstr.onrender.com/Resume.pdf
+
+## FAQ
+
+**Who is John Mark Talento Estrada?** A backend developer based in Tagaytay City, Philippines, with experience maintaining e-commerce platforms using PHP, JS, and SQL.
+
+**Is John Mark Talento Estrada available for freelance work?** Yes — web development, mobile app creation, API design, and backend integrations. Contact: jhnmrkmain@gmail.com.
+
+**What does John Mark Talento Estrada specialize in?** Backend engineering with PHP, JavaScript, Python, and SQL databases, as well as mobile development using Flutter and React Native.
+
+**How can I hire or contact John Mark Talento Estrada?** Email jhnmrkmain@gmail.com.
+
+## Contact
+
+- Email: jhnmrkmain@gmail.com
+- Phone: 0926-071-1868
